@@ -151,7 +151,7 @@ Override the default webpage of the Apache Server.
 
 ![Alt text](<images/Webserver1/Webserver2/web browser webserver2.png>)
 
-# STEP 5  Con5figure NGINX as a Load Balancer
+# STEP 5  Configure NGINX as a Load Balancer
 
 Spin Up a new EC2 Instance running on UBUNTU 22.04. 
 
@@ -188,7 +188,9 @@ Test the configuration with the command below:
 `sudo nginx -t`sudo rm /etc/nginx/sites-enabled/default
 
 Remove default symbolic link
+
 The intent of the command below is to remove or override the default NGINX default installation page
+
 `sudo rm /etc/nginx/sites-enabled/default`
 
 Restart NGINX to load the new configuration with the command below:
