@@ -185,7 +185,11 @@ Paste the NGINX configuration code into the test file
 
 Test the configuration with the command below:
 
-`sudo nginx -t`
+`sudo nginx -t`sudo rm /etc/nginx/sites-enabled/default
+
+Remove default symbolic link
+The intent of the command below is to remove or override the default NGINX default installation page
+`sudo rm /etc/nginx/sites-enabled/default`
 
 Restart NGINX to load the new configuration with the command below:
 
