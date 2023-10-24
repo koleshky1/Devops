@@ -113,9 +113,9 @@ open a new HTML file with the command below
 
 Switch to the insert mode and paste the html file.
 
-![Alt text](<images/Webserver1/webserver 1 html.png>)
+![Alt text](<images/Webserver1/webserver 1 index.html.png>)
 
-![Alt text](<images/Webserver1/webserver 2 html.png>)
+![Alt text](<images/Webserver1/webserver 2 index.html.png>)
 
 Change the file ownership of the index.html file with the command below:
 
@@ -147,9 +147,9 @@ Override the default webpage of the Apache Server.
 
 `Public IP:8000`
 
-![Alt text](<images/Webserver1/webserver1 Browser page.png>)
+![Alt text](<images/Webserver1/webserver 1 page.png>)
 
-![Alt text](<images/Webserver1/Webserver2/web browser webserver2.png>)
+![Alt text](<images/Webserver1/webserver 2 page.png>)
 
 # STEP 5  Configure NGINX as a Load Balancer
 
@@ -181,7 +181,7 @@ Open the NGINX configuration file
 
 Paste the NGINX configuration code into the test file
 
-![Alt text](<nginx/nginx modified file.png>)
+![Alt text](<nginx/nginx configuration file.png>)
 
 Test the configuration with the command below:
 
@@ -199,9 +199,9 @@ Restart NGINX to load the new configuration with the command below:
 
 Paste the Public IP of the NGINX Load Balancer in a web browser. If successful the page below is shown
 
-![Alt text](<nginx/Nginx web browser.png>)
+![Alt text](<nginx/nginx passes web 1.png>)
 
-
+![Alt text](<nginx/nginx passes web 2.png>)
 
 
 
