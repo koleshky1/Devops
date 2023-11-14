@@ -474,10 +474,6 @@ View wordpress on browser
 
 `https://54.226.17.208/wordpress`
 
-![Alt text](images/wordpress1.png)
-
-![Alt text](<images/wordpress 2.png>)
-
 ![Alt text](<images/wordpress 3.png>)
 
 NB: I did save the wordpress password unable to get to the Wordpress welcome page
