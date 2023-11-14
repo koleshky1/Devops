@@ -13,8 +13,6 @@ Spin up two instance to run on RedHat linux os: a webserver and a database serve
 
 connnect the webserver to the terminal by doing SSH
 
-![Alt text](images/sshwb.png)
-
 Create the volumes for the web server
 
 ![Alt text](<images/volumes web server.png>)
@@ -140,7 +138,7 @@ Create home/recovery/logs  to backup previous logged data.
 
 Mount the var/www/hmtl on the app-lv logical volume
 
-sudo mount /dev/webdata-vg/app-lv /var/www/html/
+`sudo mount /dev/webdata-vg/app-lv /var/www/html/`
 
 ![Alt text](<images/mount the var.png>)
 
@@ -345,7 +343,7 @@ Create Var/db directory to store the website files for the database
 
 Mount the var/db on the db-lv logical volume
 
-sudo mount /dev/database-vg/db-lv /db
+`sudo mount /dev/database-vg/db-lv /db`
 
 Verify mount
 
@@ -483,4 +481,5 @@ View wordpress on browser
 ![Alt text](<images/wordpress 3.png>)
 
 NB: I did save the wordpress password unable to get to the Wordpress welcome page
+
 
