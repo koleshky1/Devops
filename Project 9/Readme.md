@@ -215,7 +215,7 @@ Grant Privileges to User and flush privileges
 
 ![Alt text](<grant and flush privileges.png>)
 
-STEP 3 PREPARE THREE WEBSERVER TO OPERATE ON RHEL 8 OS
+# STEP 3 PREPARE THREE WEBSERVER TO OPERATE ON RHEL 8 OS
 
 Spin up three webservers  with names Web1, Web2 and web3 and SSH into the webservers.
 
@@ -340,5 +340,6 @@ Create in MySQL a new admin user with username: myuser and password: password: I
 
 
 Open the website in your browser http://webserver ip address/index.php and make sure you can login into the website with myuser user.
+
 
 ![Alt text](<log in to tooling website w1.png>) ![Alt text](<log into tooling website w2.png>) ![Alt text](<log into tooling site w3.png>)
