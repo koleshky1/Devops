@@ -78,7 +78,7 @@ First part of ‘DevOps’ is ‘Dev’, which means you will require to write s
 
 After you have successfully installed VSC, configure it to connect to your newly created GitHub repository.
 
-Clone down your ansible-config-mgt repo to your Jenkins-Ansible instance
+# STEP 3 Clone down your ansible-config-mgt repo to your Jenkins-Ansible instance
 
 git clone done already
 
@@ -117,7 +117,7 @@ ansible folders
 
 ![Alt text](<images/inventory files creations staging uat and others.png>)
 
-Step 4 – Set up an Ansible Inventory
+# Step 4 – Set up an Ansible Inventory
 An Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate. Since our intention is to execute Linux commands on remote hosts, and ensure that it is the intended configuration on a particular server that occurs. It is important to have a way to organize our hosts in such an Inventory.
 
 
@@ -160,7 +160,10 @@ Update your inventory/dev.yml file with this snippet of code:
 ![Alt text](<images/inventory dev.yml update.png>)
 
 CREATE A COMMON PLAYBOOK
-Step 5 – Create a Common Playbook
+
+
+# Step 5 – Create a Common Playbook
+
 It is time to start giving Ansible the instructions on what you needs to be performed on all servers listed in inventory/dev. In common.yml playbook you will write configuration for repeatable, re-usable, and multi-machine tasks that is common to systems within the infrastructure.
 
 Update your playbooks/common.yml file with following code:
@@ -196,7 +199,8 @@ Examine the code above and try to make sense out of it. This playbook is divided
 ![Alt text](<images/common.yml playbook create.png>)
 
 
-Step 6 – Update GIT with the latest code
+# Step 6 – Update GIT with the latest code
+
 Now all of your directories and files live on your machine and you need to push changes made locally to GitHub. It is important to learn how to collaborate with help of GIT. In many organisations there is a development rule that do not allow to deploy any code before it has been reviewed by an extra pair of eyes – it is also called "Four eyes principle". Now you have a separate branch, you will need to know how to raise a Pull Request (PR), get your branch peer reviewed and merged to the master branch.
 
 Commit your code into GitHub: 16. use git commands to add, commit and push your branch to GitHub.
@@ -229,9 +233,8 @@ confirm jenkins build
 
 ![Alt text](<images/ls var on yml files.png>)
 
+# Step 7 – Run first Ansible test
 
-RUN FIRST ANSIBLE TEST
-Step 7 – Run first Ansible test
 Now, it is time to execute ansible-playbook command and verify if your playbook actually works:
 
 `cd ansible config-mgt`
