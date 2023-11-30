@@ -2,9 +2,7 @@
 
 Ansible Client as a Jump Server also called Bastion Host is an mid-server through which access to internal network can be provided. If you think about the current architecture you are working on, ideally, the webservers would be inside a secured network which cannot be reached directly from the Internet. That means, even DevOps engineers cannot SSH into the Web servers directly and can only access it through a Jump Server – it provide better security and reduces attack surface. On the diagram below the Virtual Private Network (VPC) is divided into two subnets – Public subnet has public IP addresses and Private subnet is only reachable by private IP addresses.
 
-
 ## Task To Do 
-
 Spinup and Instance, name Jenkins-Ansible and SSH
 
 ![Alt text](<images/ssh jen-ans.png>)
@@ -23,9 +21,7 @@ Check your Ansible version by running
 
 ![Alt text](<images/ansible version.png>)
 
-
 In your GitHub account create a new repository and name it ansible-config-mgt.
-
 Install Jenkins
 
 ![Alt text](<images/update and jdk 17.png>)
@@ -36,18 +32,15 @@ Check Jenkins status
 
 ![Alt text](<images/jenkins stauts.png>)
 
-
 Configure Jenkins build job to save your repository content every time you change it – this will solidify your Jenkins configuration skills acquired in Project 9.
 
 ![Alt text](<images/strict crumb pug in installation.png>)
 
 ![Alt text](<images/jen login 1.png>) ![Alt text](<images/jen log 2.png>) ![Alt text](<images/jen log 3.png>) ![Alt text](<images/restart after strict crum install.png>)
 
-
 Create a new Freestyle project ansible in Jenkins and point it to your ‘ansible-config-mgt’ repository.
 
 ![Alt text](<images/free style job config.png>)
-
 
 Configure Webhook in GitHub and set webhook to trigger ansible build.
 
@@ -61,17 +54,13 @@ Edit jenkin Inbound rule
 
 ![Alt text](<images/jenkins inbound rule.png>)
 
-
-
 Test your setup by making some change in README.MD file in main branch and make sure that builds starts automatically and Jenkins saves the files (build artifacts) in following folder
 
 ls /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/
 
-
 ![Alt text](<images/build test on jenkins.png>)
 
 ![Alt text](<images/to check jenkin saves file.png>)
-
 
 # Step 2 – Prepare your development environment using Visual Studio Code
 First part of ‘DevOps’ is ‘Dev’, which means you will require to write some codes and you shall have proper tools that will make your coding and debugging comfortable – you need an Integrated development environment (IDE) or Source-code Editor. There is a plethora of different IDEs and Source-code Editors for different languages with their own advantages and drawbacks, you can choose whichever you are comfortable with, but we recommend one free and universal editor that will fully satisfy your needs – Visual Studio Code (VSC)
@@ -89,13 +78,10 @@ Tip: Give your branches descriptive and comprehensive names, for example, if you
 
 ![Alt text](<images/new branch.png>)
 
-
 Checkout the newly created feature branch to your local machine and start building your code and directory structure
 
 `git fetch`
-
 `git switch feat/prj-11`
-
 
 Create a directory and name it playbooks – it will be used to store all your playbook files.
 Create a directory and name it inventory – it will be used to keep your hosts organised.
@@ -120,9 +106,7 @@ ansible folders
 # Step 4 – Set up an Ansible Inventory
 An Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate. Since our intention is to execute Linux commands on remote hosts, and ensure that it is the intended configuration on a particular server that occurs. It is important to have a way to organize our hosts in such an Inventory.
 
-
 Save below inventory structure in the inventory/dev file to start configuring your development servers. Ensure to replace the IP addresses according to your own setup.
-
 Note: Ansible uses TCP port 22 by default, which means it needs to ssh into target servers from Jenkins-Ansible host – for this you can implement the concept of ssh-agent. Now you need to import your key into ssh-agent:
 
 To learn how to setup SSH agent and connect VS Code to your Jenkins-Ansible instance, please see this video: • For Windows users – ssh-agent on windows • For Linux users – ssh-agent on linux
