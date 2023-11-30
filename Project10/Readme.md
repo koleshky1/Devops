@@ -75,7 +75,6 @@ BEGIN ANSIBLE DEVELOPMENT
 In your ansible-config-mgt GitHub repository, create a new branch that will be used for development of a new feature.
 Tip: Give your branches descriptive and comprehensive names, for example, if you use Jira or Trello as a project management tool – include ticket number (e.g. PRJ-145) in the name of your branch and add a topic and a brief description what this branch is about – a bugfix, hotfix, feature, release (e.g. feature/prj-145-lvm)
 
-
 ![Alt text](<images/new branch.png>)
 
 Checkout the newly created feature branch to your local machine and start building your code and directory structure
@@ -121,7 +120,6 @@ ssh
 
 ssh check
 
-
 Also notice, that your Load Balancer user is ubuntu and user for RHEL-based servers is ec2-user.
 
 Update your inventory/dev.yml file with this snippet of code:
@@ -144,7 +142,6 @@ Update your inventory/dev.yml file with this snippet of code:
 ![Alt text](<images/inventory dev.yml update.png>)
 
 CREATE A COMMON PLAYBOOK
-
 
 # Step 5 – Create a Common Playbook
 
@@ -195,7 +192,6 @@ Commit your code into GitHub: 16. use git commands to add, commit and push your 
 
 `git commit -m "commit message"`
 
-
 ![Alt text](<images/git status.png>) ![Alt text](<images/git add and commit.png>) ![Alt text](<images/git commit playbook.png>) ![Alt text](<images/git push.png>)
 
 Create a Pull request (PR)
@@ -203,11 +199,9 @@ Head back on your terminal, checkout from the feature branch into the master, an
 
 ![Alt text](<images/pull request creation and merge.png>)
 
-
 `git pull`
 
 Once your code changes appear in master branch – Jenkins will do its job and save all the files (build artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory on Jenkins-Ansible server.
-
 
 jenkins build
 
@@ -222,7 +216,6 @@ confirm jenkins build
 Now, it is time to execute ansible-playbook command and verify if your playbook actually works:
 
 `cd ansible config-mgt`
-
 
 `ansible-playbook -i inventory/dev.yml playbooks/common.yml`
 
