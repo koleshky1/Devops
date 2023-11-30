@@ -189,11 +189,11 @@ Now all of your directories and files live on your machine and you need to push 
 
 Commit your code into GitHub: 16. use git commands to add, commit and push your branch to GitHub.
 
-git status
+`git status`
 
-git add <selected files>
+`git add <selected files>`
 
-git commit -m "commit message"
+`git commit -m "commit message"`
 
 
 ![Alt text](<images/git status.png>) ![Alt text](<images/git add and commit.png>) ![Alt text](<images/git commit playbook.png>) ![Alt text](<images/git push.png>)
