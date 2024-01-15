@@ -119,7 +119,7 @@ Update site.yml file to make use of the dynamic assignment. (At this point, we c
 - name: Webserver assignment
   import_playbook: ../static-assignments/webservers.yml
 
-![Alt text](<images/site.yml code update.png>)
+![Alt text](images/site.yml.png)
 
 ![Alt text](<images/git add and push.png>)
 
@@ -139,30 +139,68 @@ We will be using a MySQL role developed by geerlingguy. Hint: To preserve your y
 
 On Jenkins-Ansible server make sure that git is installed with git --version, then go to ‘ansible-config-mgt’ directory and run
 
-git init
-git pull https://github.com/<your-name>/ansible-config-mgt.git
-git remote add origin https://github.com/<your-name>/ansible-config-mgt.git
-git branch roles-feature
-git switch roles-feature
-git init
+configuration of the mysql role
+
+![Alt text](<images/mysql configuration.png>)
+
+
+Cofigure the roles for the Nginx
+
+![Alt text](<images/nginx configuration.png>)
+
+
+Configuaration of the role for the Apache
+
+![Alt text](<images/apache config.png>)
+
+Cross check the task on the webserver
+
+![Alt text](<images/webserver configuration .png>)
+
+update the webserver.yml file
+
+![Alt text](images/webserveryml.png)
+
+update the env uat.y,ml file
+
+![Alt text](<images/env uatyml.png>)
+
+Edit the IP adresses of the hosts
 
 Inside roles directory create your new MySQL role with ansible-galaxy install -p . geerlingguy.mysql and rename the folder to mysql using mv geerlingguy.mysql/ mysql
 
 Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website. Now it is time to upload the changes into your GitHub:
 
-git add .
-git commit -m "Commit new role files into GitHub"
-git push --set-upstream origin roles-feature
-Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub.
 
-Load Balancer roles
-We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
+# configuration of the mysql role
 
-Nginx
-Apache
-ansible galaxy
+![Alt text](<images/mysql configuration.png>)
 
-Important Hints:
+
+# Configure the roles for the Nginx
+
+![Alt text](<images/nginx configuration.png>)
+
+
+# Configuaration of the role for the Apache
+
+![Alt text](<images/apache config.png>)
+
+# Cross check the task on the webserver
+
+![Alt text](<images/webserver configuration .png>)
+
+# Update the webserver.yml file
+
+![Alt text](images/webserveryml.png)
+
+# update the env uat.y,ml file
+
+![Alt text](<images/env uatyml.png>)
+
+# Edit the IP adresses of the hosts
+
+![Alt text](images/uat.yml.png)
 
 Since you cannot use both Nginx and Apache load balancer, you need to add a condition to enable either one – this is where you can make use of variables.
 Declare a variable in defaults/main.yml file inside the Nginx and Apache roles. Name each variables enable_nginx_lb and enable_apache_lb respectively.
@@ -175,28 +213,30 @@ loadbalancers.yml file
   roles:
     - { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
     - { role: apache, when: enable_apache_lb and load_balancer_is_required }
-site.yml file
+
+![Alt text](images/loadbalancer.png)
 
     - name: Loadbalancers assignment
        hosts: lb
          - import_playbook: ../static-assignments/loadbalancers.yml
         when: load_balancer_is_required 
+    
+![Alt text](images/site.yml.png)
 
-        x
-Now you can make use of env-vars\uat.yml file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true. You will activate load balancer, and enable nginx by setting these in the respective environment’s env-vars file.
+# Push to the remote server  
 
-enable_nginx_lb: true
-load_balancer_is_required: true
-ansible i 1
+git add .
+git commit -m "Commit new role files into GitHub"
+git push --set-upstream origin roles-feature
+Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub.
 
-ansible i 3
+ping all host to confirm they are reachable
 
-ansible i 2
+![Alt text](<images/ping success.png>)
 
-The same must work with apache LB, so you can switch it by setting respective environmental variable to true and other to false.
 
-To test this, you can update inventory for each environment and run Ansible against each environment.
+# Run the playbook
 
-Congratulations!
+![Alt text](<images/playbook success  1.png>)
 
-You have learned and practiced how to use Ansible configuration management tool to prepare UAT environment for Tooling web solution.
+![Alt text](<images/playbook success  2.png>)
