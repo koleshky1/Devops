@@ -13,7 +13,9 @@ Spin up two instance to run on RedHat linux os: a webserver and a database serve
 
 connnect the webserver to the terminal by doing SSH
 
-Create the volumes for the web server
+![Alt text](images/sshwb.png)
+
+## Create the volumes for the web server
 
 ![Alt text](<images/volumes web server.png>)
 
@@ -21,7 +23,7 @@ Attach the volumes for the web server
 
 ![Alt text](<images/attached web server volumes.png>)
 
-# STEP 2 CONFIGURING THE WEBSERVER
+# STEP 2 CONFIGURING THE WEB SERVER
 
 ## Open the server and use the command to inspect the volumes
 
@@ -41,6 +43,7 @@ Volume 1
 
 `sudo gdisk /dev/xvdf`
 
+
 ![Alt text](<images/partition xvdg web1.png>)
 
 Volume 2
@@ -48,6 +51,7 @@ Volume 2
 `sudo gdisk /dev/xvdg`
 
 ![Alt text](<images/partition xvdg web2.png>)
+
 
 Volume 3
 
@@ -59,7 +63,7 @@ VIew new partitions on web server
 
 ![Alt text](<images/view new partitions.png>)
 
-# STEP 3 INSTALL LVM 2 PACKAGE
+# STEP 3 PREPARE THE LVM
 
 Use the command to install LVM 2 package on RedHat
 
@@ -107,6 +111,7 @@ Crete and Verify logical volumes
 
  `sudo lvs`
 
+
 ![Alt text](<images/create and verify logical volumes.png>)
 
 Verify the entire setup
@@ -120,7 +125,7 @@ Format logical volumes with ext4 file system
 
 `sudo mkfs -t ext4 /dev/webdata-vg/app-lv`
 
-sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
+`sudo mkfs -t ext4 /dev/webdata-vg/logs-lv`
 
 ![Alt text](<images/format logical volume.png>)
 
@@ -138,7 +143,7 @@ Create home/recovery/logs  to backup previous logged data.
 
 Mount the var/www/hmtl on the app-lv logical volume
 
-`sudo mount /dev/webdata-vg/app-lv /var/www/html/`
+sudo mount /dev/webdata-vg/app-lv /var/www/html/
 
 ![Alt text](<images/mount the var.png>)
 
@@ -166,15 +171,21 @@ Restore log files back to var/logs directory
 
 ![Alt text](<images/restore log file.png>)
 
-Update `/etc/fstab` 
+Update the `/etc/fstab` file
 
-`sudo blkid`
+The intend is to make our configuration persist when we restart our instance.
 
-`sudo vi /etc/fstab/`
+`blkid `
+
+`sudo vi /etc/fstab`
 
 ![Alt text](<images/etc fstab.png>)
 
-Test configuratiuon, reload daemon and verify setup.
+To test if configuration is ok
+
+Restart Daemon
+
+Verify if properly done
 
 `sudo mount -a`
 
@@ -182,21 +193,19 @@ Test configuratiuon, reload daemon and verify setup.
 
 `df -h`
 
-![Alt text](<images/verify web.png>)
+![Alt text](<images/verify .png>)
 
-INSTALLATION OF WORDPRESSS AND MYSQL DATABASE CONFIGURATION
+# STEP 4 INSTALL WORDPRESS
 
-Update the Repository
+Update the repository
 
 `sudo yum -y update`
 
 ![Alt text](<images/update the repository.png>)
 
-Install wget, Apache and its dependencies.
+Install wget, Apache and its dependencies
 
-`sudo yum install wget httpd php php-mysqlnd php-fpm php-json`
-
-![Alt text](<install dependencies.png>)'
+`sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json`
 
 Start Apache
 
@@ -204,9 +213,11 @@ Start Apache
 
 `sudo systemctl start httpd`
 
+`sudo systemctl status`
+
 ![Alt text](<images/start apache.png>)
 
-Install PHP and its Dependencies
+Install PHP and its Depedencies
 
 `sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm`
 `sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm`
@@ -224,7 +235,9 @@ Restart Apache
 
 `sudo systemctl restart httpd`
 
-Download and copy wordpress to `var/www/html`
+`sudo systemctl status`
+
+Download wordpress and copy to var/www/html
 
 `mkdir wordpress`
 `cd   wordpress`
@@ -234,16 +247,33 @@ Download and copy wordpress to `var/www/html`
 `sudo cp wordpress/wp-config-sample.php wordpress/wp-config.php`
 `sudo cp -R wordpress /var/www/html/`
 
-Configure SE policies
+
+![Alt text](images/wordpress1.png)
+
+![Alt text](<images/wordpress 2.png>)
+
+Configure the Security policies for Linux
 
  `sudo chown -R apache:apache /var/www/html/wordpress`
-` sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R`
+ `sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R`
 ` sudo setsebool -P httpd_can_network_connect=1`
 
 ![Alt text](<images/SE policy.png>)
 
 
-# STEP 4 CONFIGURING DATABASE SERVER SERVER
+# STEP 5 PREPARE THE DATABASE
+
+## Create the volumes for the Database server
+
+Attach the volumes for the web server
+
+![Alt text](<attached volumes-1.png>)
+
+SSH terninal to Database instance
+
+![Alt text](<ssh to databse.png>)
+
+# STEP 2 CONFIGURING THE DATABASE SERVER
 
 ## Open the server and use the command to inspect the volumes
 
@@ -255,13 +285,14 @@ Configure SE policies
 
 - To check all mounts and free space on server
 
-![Alt text](<images/vol check db.png>)
+`df -h`
 
 ## Create single partion for each volume
 
 Volume 1
 
 `sudo gdisk /dev/xvdf`
+
 
 ![Alt text](<images/partition db1.png>)
 
@@ -277,12 +308,11 @@ Volume 3
 
 ![Alt text](<images/partition db3.png>)
 
-VIew new partitions on database server
+VIew new partitions on database
 
 ![Alt text](<images/view db partitions.png>)
 
-
-# STEP 5 INSTALL LVM 2 PACKAGE
+# STEP 3 PREPARE THE LVM
 
 Use the command to install LVM 2 package on RedHat
 
@@ -303,24 +333,23 @@ Use the `pv create` command to mark the physical volumes to be used by the LVM
 
 ![Alt text](<images/db markdown pv create.png>)
 
-
 Verify physical volumes are created
 
 `sudo pvs`
 
-![Alt text](<images/verify volumes pvs db.png>)
+![Alt text](<images/verify volumes db.png>)
 
 Add all three volumes to a volume group VG and verify task.
 
-`sudo vgcreate database-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1`
+`sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1`
 
 `sudo vgs`
 
 ![Alt text](<images/vg create db.png>)
 
-Create and Verify logical volumes
+Create and Verify logical volume
 
-`sudo lvcreate -n db-lv -L 14G database-vg`
+`sudo lvcreate -n db-lv  -L 28G database-vg`
 
  `sudo lvs`
 
@@ -332,34 +361,41 @@ Verify the entire setup
 
 ![Alt text](<images/verify entire db setup.png>)
 
+
+
+
+
+Create database directory
+
+`sudo mkdir /db`
+
 Format logical volumes with ext4 file system
 
-`sudo mkfs -t ext4 /dev/database-vg/db-lv`
+`sudo mkfs.ext4 /dev/database-vg/db-lv /db`
 
-![Alt text](<images/format db fs.png>)
+Mount the database on the db-lv logical volume
 
-Create Var/db directory to store the website files for the database
-`sudo mkdir -p /var/db`
+`sudo mount /dev/database-vg/db-lv /db `
 
-Mount the var/db on the db-lv logical volume
-
-`sudo mount /dev/database-vg/db-lv /db`
-
-Verify mount
-
-`df -h`
+`Verify mount`
 
 ![Alt text](<images/mount db.png>)
 
-Update `/etc/fstab` 
+Update the `/etc/fstab` file
 
-`sudo blkid`
+The intend is to make our configuration persist when we restart our instance.
 
-`sudo vi /etc/fstab/`
+`blkid `
+
+`sudo vi /etc/fstab`
 
 ![Alt text](<images/db file.png>)
 
-Test configuratiuon, reload daemon and verify setup.
+To test if configuration is ok
+
+Restart Daemon
+
+Verify if properly done
 
 `sudo mount -a`
 
@@ -367,11 +403,15 @@ Test configuratiuon, reload daemon and verify setup.
 
 `df -h`
 
-![Alt text](<test to ok db.png>)
+![Alt text](<images/test to ok db.png>)
 
-# STEP 7 Install MYSQL on DATABASE SERVER
+Update and install MySQL Server on Database
 
 `sudo yum update`
+
+![Alt text](<images/udate db server.png>)
+
+Install MySQL Server 
 
 `sudo yum install mysql-server`
 
@@ -379,34 +419,33 @@ Test configuratiuon, reload daemon and verify setup.
 
 ![Alt text](<images/mysql install2.png>)
 
-Run MYSQL Secure Installation
-
-`Sudo mysql_secure_installation`
-
-![Alt text](<images/MySQL secure installation1.png>)
-
-![Alt text](<images/MySQL secure installation2.png>)
-
-Verify the system status using the below:
-
-`sudo systemctl status mysqld`
+Verify the service is running
 
 ![Alt text](<images/mysql status.png>)
 
-Restart and Enable MYSQL
-
-`sudo systemctl restart mysqld`
-`sudo systemctl enable mysqld`
+Restart and enable MYSQL
 
 ![Alt text](<images/restart and enable mysql.png>)
 
-Configure Database to work with Wordpress
+Run MYSQL seucre Installation
 
-`sudo mysql`
+`sudo mysql_secure_installation`
 
-`CREATE DATABASE wordpress;`
+![Alt text](<images/mysql install1.png>)
+
+![Alt text](<images/mysql install2.png>)
+
+Login to MYSQL
+
+![Alt text](<images/log in to mysql.png>)
+
+Create Database
+
+`CREATE DATABASE;`
 
 ![Alt text](<images/Create Database.png>)
+
+Create user, grant User privilege and flush privileges
 
 `CREATE USER `myuser`@`172.31.23.103` IDENTIFIED BY 'password';`
 
@@ -416,66 +455,27 @@ Configure Database to work with Wordpress
 
 ![Alt text](<images/Create user.png>)
 
-`SHOW DATABASES;`
+Show Current Databse
 
-![Alt text](<images/show new db.png>)
+`show databases;`
 
 `exit;`
 
-![Alt text](<images/shown database.png>)
+![Alt text](<images/show current databases.png>)
 
-Configure wordpress to connect to remote database
-
-`open port 3306`
+Edit inbound rule for database server to allow port 3306
 
 ![Alt text](<images/edit server inbound rule.png>)
 
-# STEP 8 Install MYSQL Client on the Webserver
+Install MYSQL Client on Webserver
 
 `sudo yum install mysql -y`
 
-![Alt text](<images/install mysql client.png>)
 
 
-Edit the Server configuration file to allow connection from remote user
-
-`sudo vi /etc/my.cnf`
-
-![Alt text](<images/input binding address.png>)
-
-Restart MYSQL Server and check status
-
-`sudo systemctl restart mysqld`
-
-![Alt text](<images/restart db and check status.png>)
-
-`sudo mysql -u myuser -ppassword -h 172.31.23.103`
-
-![Alt text](<images/client to server connection.png>)
 
 
-Edit the configuration file for the webserver so Apache could access wordpress
 
-TO make Apache  owner
 
-` sudo chown -R apache:apache /var/www/html/wordpress`
-
-![Alt text](<images/apache ownership.png>)
-
-Edit Inbound rule for Webserver for Apache to use port 80
-
-![Alt text](<images/webserver inbound rule.png>)
-
-Edit the `wp-config.php` file in wordpress
-
-![Alt text](<wp config file.png>)
-
-View wordpress on browser
-
-`https://54.226.17.208/wordpress`
-
-![Alt text](<images/wordpress 3.png>)
-
-NB: I did save the wordpress password unable to get to the Wordpress welcome page
 
 
